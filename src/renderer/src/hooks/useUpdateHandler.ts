@@ -13,7 +13,9 @@ export default function useUpdateHandler() {
     const removers = [
       ipcRenderer.on('update-not-available', () => {
         dispatch(setUpdateState({ checking: false }))
-        window.message.success(t('settings.about.updateNotAvailable'))
+        if (window.location.pathname.includes('settings/about')) {
+          window.message.success(t('settings.about.updateNotAvailable'))
+        }
       }),
       ipcRenderer.on('update-available', (_, releaseInfo: UpdateInfo) => {
         dispatch(
